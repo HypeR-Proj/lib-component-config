@@ -1,25 +1,13 @@
 {
   "version": 1,
-  "name": "component-config",
+  "name": "lib-component-config",
   "kind": "library",
   "origin": {
     "repository": "https://github.com/roolrz/HypeR",
     "commit": "8d42d047058a2b58a291803700e86487fb723f7a"
   },
-  "sources": {
-    "Cargo.toml": "lib/component-config/Cargo.toml",
-    "src/lib.rs": "lib/component-config/src/lib.rs",
-    "src/model.rs": "lib/component-config/src/model.rs",
-    "src/scheduling.rs": "lib/component-config/src/scheduling.rs",
-    "src/topology.rs": "lib/component-config/src/topology.rs",
-    "tests/routing.rs": "lib/component-config/tests/routing.rs",
-    "tests/scheduling.rs": "lib/component-config/tests/scheduling.rs"
-  },
   "SPDX-FileCopyrightText": "2026 roolrz",
   "SPDX-License-Identifier": "Apache-2.0",
-  "mounts": {
-    "": "lib/component-config"
-  },
   "packages": [
     "hyper-component-config"
   ],
@@ -29,20 +17,5 @@
       "app-test",
       "APP_TEST_PACKAGE=hyper-component-config"
     ]
-  ],
-  "cargo_context": {
-    "Cargo.toml": {
-      "workspace": null,
-      "membership": "../../app",
-      "dependency_paths": {},
-      "inherited_dependencies": {
-        "/dependencies/serde": {
-          "workspace": true
-        },
-        "/dependencies/serde_json": {
-          "workspace": true
-        }
-      }
-    }
-  }
+  ]
 }
