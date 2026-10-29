@@ -29,5 +29,20 @@
       "app-test",
       "APP_TEST_PACKAGE=hyper-component-config"
     ]
-  ]
+  ],
+  "cargo_context": {
+    "Cargo.toml": {
+      "workspace": null,
+      "membership": "../../app",
+      "dependency_paths": {},
+      "inherited_dependencies": {
+        "/dependencies/serde": {
+          "workspace": true
+        },
+        "/dependencies/serde_json": {
+          "workspace": true
+        }
+      }
+    }
+  }
 }
