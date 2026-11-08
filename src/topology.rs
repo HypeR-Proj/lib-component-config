@@ -357,6 +357,13 @@ fn validate(c: &Component) -> Result<(), String> {
         if !kind(&u.kind)
             || match (&u.kind, u.purpose) {
                 (CapabilityType::Protocol { .. }, None) => false,
+                (CapabilityType::Object { object_type, .. }, Some(p))
+                    if p == hyper_abi::HYPER_NATIVE_STARTUP_HANDLE_PURPOSE_EXECUTABLE_AUTHORITY
+                        as u32 =>
+                {
+                    *object_type != hyper_abi::HYPER_NATIVE_OBJECT_EXECUTABLE_AUTHORITY
+                        || !purposes.insert(p)
+                }
                 (CapabilityType::Object { .. }, Some(p))
                     if p != 0
                         && !matches!(
