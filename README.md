@@ -34,3 +34,8 @@ entry delegates to build/system, which prepares the installed SDK and declared
 dependencies. Native binaries require HypeR; host module checks cover the tests
 selected by component.json. A standalone clone does not contain the workspace’s
 other source repositories or Native SDK.
+
+Native startup purpose `4` is permitted only for an explicitly routed
+`ExecutableAuthority` object. Other framework-owned startup purposes remain
+reserved, and duplicate purposes are rejected. This declaration supplies no
+authority by itself; startup must export the matching live capability.

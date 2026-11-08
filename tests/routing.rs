@@ -199,3 +199,35 @@ fn persistent_object_exports_and_prepared_grants_have_explicit_owners() {
     d[1]["program"]["prepared"] = json!(true);
     assert!(parse(d).is_err());
 }
+
+#[test]
+fn executable_startup_purpose_accepts_only_explicit_executable_authority() -> Result<(), String> {
+    let kind = json!({
+        "type":"object",
+        "object_type":hyper_abi::HYPER_NATIVE_OBJECT_EXECUTABLE_AUTHORITY,
+        "rights":hyper_abi::HYPER_NATIVE_RIGHT_CREATE_EXECUTABLE,
+    });
+    let mut d = object_documents("duplicate");
+    d[0]["capabilities"][0]["kind"] = kind.clone();
+    d[0]["offer"][0]["kind"] = kind.clone();
+    d[1]["use"][0]["kind"] = kind;
+    d[1]["use"][0]["purpose"] =
+        json!(hyper_abi::HYPER_NATIVE_STARTUP_HANDLE_PURPOSE_EXECUTABLE_AUTHORITY);
+    parse(d.clone())?;
+    let mut duplicate = d.clone();
+    let mut second = duplicate[1]["use"][0].clone();
+    second["name"] = json!("another-authority");
+    duplicate[1]["use"] = json!([duplicate[1]["use"][0], second]);
+    assert!(parse(duplicate).is_err());
+    for object_type in [
+        hyper_abi::HYPER_NATIVE_OBJECT_DIRECTORY,
+        hyper_abi::HYPER_NATIVE_OBJECT_TASK_FACTORY,
+    ] {
+        let mut invalid = d.clone();
+        invalid[0]["capabilities"][0]["kind"]["object_type"] = json!(object_type);
+        invalid[0]["offer"][0]["kind"]["object_type"] = json!(object_type);
+        invalid[1]["use"][0]["kind"]["object_type"] = json!(object_type);
+        assert!(parse(invalid).is_err());
+    }
+    Ok(())
+}
